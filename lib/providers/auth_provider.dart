@@ -82,7 +82,7 @@ class AuthProvider extends ChangeNotifier {
       final profile = await _rideApi.getMyProfile();
       if (profile.isBanned) {
         await _api.logout();
-        error = 'Your account has been suspended. Contact support for help.';
+        error = 'Your account has been suspended. Contact admin@lus.ac.bd';
         isLoading = false;
         notifyListeners();
         return false;

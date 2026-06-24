@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
+import '../config/supabase_config.dart';
 import 'home_shell.dart';
 import 'register_screen.dart';
 import 'forgot_password_screen.dart';
@@ -108,7 +109,6 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 _buildHeader(),
                 const SizedBox(height: 56),
-
                 const Text(
                   'Welcome back',
                   textAlign: TextAlign.center,
@@ -130,7 +130,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 48),
-
                 Container(
                   padding: const EdgeInsets.all(28),
                   decoration: BoxDecoration(
@@ -157,7 +156,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           hint: 'cse_yourid@lus.ac.bd',
                           icon: Icons.alternate_email_rounded,
                           keyboardType: TextInputType.emailAddress,
-                          validator: (v) => (v == null || v.trim().isEmpty) ? 'Required' : null,
+                          validator: (v) {
+                            if (v == null || v.trim().isEmpty) return 'Required';
+                            if (!AppConfig.emailRegex.hasMatch(v.trim())) {
+                              return 'Must be @lus.ac.bd email';
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 24),
                         Row(
@@ -203,9 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 40),
-
                 _buildFooter(),
               ],
             ),
