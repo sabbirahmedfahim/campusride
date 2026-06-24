@@ -134,7 +134,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       elevation: 0,
       centerTitle: false,
       title: const Text(
-        'CampusRide',
+        'Campus Ride',
         style: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.w800,

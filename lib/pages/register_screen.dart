@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../config/supabase_config.dart';
@@ -87,7 +88,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        _buildHeader(),
                         const SizedBox(height: 48),
 
                         Container(
@@ -119,13 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                               _buildLabel('Phone Number'),
                               const SizedBox(height: 10),
-                              _buildTextField(
-                                controller: _phoneCtrl,
-                                hint: '017XXXXXXXX',
-                                icon: Icons.phone_android_rounded,
-                                keyboardType: TextInputType.phone,
-                                validator: (v) => (v == null || v.trim().isEmpty) ? 'Required' : null,
-                              ),
+                              _buildPhoneField(),
                               const SizedBox(height: 24),
 
                               _buildLabel('Gender'),
@@ -185,33 +179,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _buildHeader() {
-    return Column(
-      children: [
-        const Text(
-          'Join CampusRide',
-          style: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.w900,
-            color: Colors.white,
-            letterSpacing: -1.0,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 10),
-        Text(
-          'Fill in your details to get started with your community.',
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.white.withOpacity(0.5),
-            fontWeight: FontWeight.w500,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
-
   Widget _buildLabel(String text) {
     return Text(
       text,
@@ -242,6 +209,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
         hintText: hint,
         hintStyle: TextStyle(color: Colors.white.withOpacity(0.2), fontWeight: FontWeight.w500),
         prefixIcon: Icon(icon, color: kPrimaryColor, size: 20),
+        filled: true,
+        fillColor: kSurfaceColor,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: Colors.white.withOpacity(0.05)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: kPrimaryColor, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: Colors.redAccent, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: Colors.redAccent, width: 1.5),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPhoneField() {
+    return TextFormField(
+      controller: _phoneCtrl,
+      keyboardType: TextInputType.number,
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        LengthLimitingTextInputFormatter(11),
+      ],
+      validator: (v) {
+        if (v == null || v.trim().isEmpty) return 'Required';
+        if (v.length != 11) return 'Phone number must be exactly 11 digits';
+        return null;
+      },
+      style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),
+      decoration: InputDecoration(
+        hintText: '01700000000',
+        hintStyle: TextStyle(color: Colors.white.withOpacity(0.2), fontWeight: FontWeight.w500),
+        prefixIcon: Icon(Icons.phone_android_rounded, color: kPrimaryColor, size: 20),
         filled: true,
         fillColor: kSurfaceColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),

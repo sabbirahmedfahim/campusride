@@ -13,6 +13,10 @@ class ChatInboxScreen extends StatefulWidget {
 }
 
 class _ChatInboxScreenState extends State<ChatInboxScreen> {
+  static const Color kPrimaryColor = Color(0xFF10B981);
+  static const Color kSurfaceColor = Color(0xFF051424);
+  static const Color kCardColor = Color(0xFF111E2F);
+
   @override
   void initState() {
     super.initState();
@@ -38,32 +42,105 @@ class _ChatInboxScreenState extends State<ChatInboxScreen> {
     final myId = AuthApi().currentUserId;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Messages')),
+      backgroundColor: kSurfaceColor,
+      appBar: AppBar(
+        backgroundColor: kSurfaceColor,
+        elevation: 0,
+        centerTitle: false,
+        title: const Text(
+          'Messages',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.w800,
+            letterSpacing: -0.8,
+          ),
+        ),
+      ),
       body: provider.isLoadingInbox && provider.inbox.isEmpty
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: kPrimaryColor,
+              ),
+            )
           : provider.inbox.isEmpty
-              ? const Center(child: Text('No conversations yet.'))
+              ? Center(
+                  child: Text(
+                    'No conversations yet.',
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.4),
+                      fontSize: 15,
+                    ),
+                  ),
+                )
               : RefreshIndicator(
                   onRefresh: provider.loadInbox,
-                  child: ListView.builder(
-                    itemCount: provider.inbox.length,
-                    itemBuilder: (context, i) {
-                      final convo = provider.inbox[i];
-                      return ConversationTile(
-                        conversation: convo,
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => ChatScreen(
-                                conversationId: convo.id,
-                                otherUserId: myId == null ? '' : convo.otherUserId(myId),
-                                otherUserName: convo.otherUserName ?? 'Unknown User',
-                              ),
+                  color: kPrimaryColor,
+                  backgroundColor: kCardColor,
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: kPrimaryColor,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: kPrimaryColor.withOpacity(0.4),
+                                  blurRadius: 8,
+                                  spreadRadius: 2,
+                                ),
+                              ],
                             ),
-                          );
-                        },
-                      );
-                    },
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            '${provider.inbox.length} conversation${provider.inbox.length == 1 ? '' : 's'}',
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.5),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      ...provider.inbox.map(
+                        (convo) => Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: Theme(
+                            data: Theme.of(context).copyWith(
+                              cardColor: kCardColor,
+                            ),
+                            child: ConversationTile(
+                              conversation: convo,
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => ChatScreen(
+                                      conversationId: convo.id,
+                                      otherUserId: myId == null
+                                          ? ''
+                                          : convo.otherUserId(myId),
+                                      otherUserName:
+                                          convo.otherUserName ?? 'Unknown User',
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
                   ),
                 ),
     );
