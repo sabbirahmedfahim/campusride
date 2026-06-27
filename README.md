@@ -24,29 +24,42 @@ CampusRide is a mobile app that lets **Leading University students share rides w
 
 Students who have empty seats in their vehicle post a **Ride Offer**. Students who need a ride post a **Ride Request**. Ride offers, requests, notifications, and chat all update in real time. Coordination happens with a phone call. No payments, no complicated matching.
 
+
 ---
 
-## Screenshots
+## 🎥 See It In Action
 
-| Login | Register | OTP Verification |
-|:---:|:---:|:---:|
-| ![Login](assets/icon/login.png) | ![Register](assets/icon/register.png) | ![OTP](assets/icon/otp.png) |
-| *Login Screen* | *Register Screen* | *OTP Verification* |
+<p align="center">
+  <a href="https://www.youtube.com/shorts/arqNhcdvgJk" target="_blank">
+    <img src="assets/icon/dashboard.png" alt="CampusRide Demo" width="300" style="border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+  </a>
+</p>
 
-| Dashboard | Ride Detail | Leaderboard |
-|:---:|:---:|:---:|
-| ![Dashboard](assets/icon/dashboard.png) | ![Ride Detail](assets/icon/ride_detail.png) | ![Leaderboard](assets/icon/leaderboard.png) |
-| *Home Dashboard* | *Ride Detail* | *Contribution Leaderboard* |
+<p align="center">
+  <b>▶️ Watch a 1-minute demo of all key features</b><br>
+  <sub>Click the image above or <a href="https://www.youtube.com/shorts/arqNhcdvgJk">open on YouTube</a></sub>
+</p>
 
-| Chat | Notification Inbox | Profile |
-|:---:|:---:|:---:|
-| ![Chat](assets/icon/chat.png) | ![Inbox](assets/icon/inbox.png) | ![Profile](assets/icon/profile.png) |
-| *In-App Chat* | *Notification Inbox* | *Profile Screen* |
+---
 
-| Admin Panel | Notification Bell | |
-|:---:|:---:|:---:|
-| ![Admin](assets/icon/admin_panel.png) | ![Notification](assets/icon/notification.png) | |
-| *Admin Dashboard* | *Notification* | |
+## 📱 Screenshots
+
+<p align="center">
+  <img src="assets/icon/login.png" width="235" alt="Login"/>
+  <img src="assets/icon/register.png" width="235" alt="Register"/>
+  <img src="assets/icon/otp.png" width="235" alt="OTP Verification"/>
+
+  <img src="assets/icon/dashboard.png" width="235" alt="Dashboard"/>
+  <img src="assets/icon/ride_detail.png" width="235" alt="Ride Detail"/>
+  <img src="assets/icon/leaderboard.png" width="235" alt="Leaderboard"/>
+
+  <img src="assets/icon/chat.png" width="235" alt="Chat"/>
+  <img src="assets/icon/inbox.png" width="235" alt="Notification Inbox"/>
+  <img src="assets/icon/profile.png" width="235" alt="Profile"/>
+
+  <img src="assets/icon/admin_panel.png" width="235" alt="Admin Panel"/>
+  <img src="assets/icon/notification.png" width="235" alt="Notification"/>
+</p>
 
 ---
 
