@@ -42,7 +42,7 @@ Students who have empty seats in their vehicle post a **Ride Offer**. Students w
 
 ---
 
-## 📱 Screenshots
+## Screenshots
 
 <p align="center">
   <img src="assets/icon/login.png" width="235" alt="Login"/>
@@ -189,13 +189,13 @@ lib/
 - Flutter SDK `>=3.0.0`
 - Dart SDK `>=3.0.0`
 - Android minSdk `23` (required by `geolocator`)
-- A Supabase project with the schema applied (see [Database Setup](#database-setup))
+- A Supabase project with the schema applied
 
 ### Installation
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/your-username/campusride.git
+git clone https://github.com/sabbirahmedfahim/campusride.git
 cd campusride
 
 # 2. Install dependencies
@@ -218,21 +218,7 @@ flutter build apk --release
 
 ## Database Setup
 
-Run the SQL migrations in the following order in the Supabase SQL Editor:
-
-| # | Section | What it creates |
-|---|---|---|
-| 1 | Core schema | `users`, `rides`, `notifications` tables, triggers, RLS, `pg_cron` expiry job, leaderboard queries |
-| 2 | In-app chat | `conversations`, `messages` tables, triggers, RLS, Realtime publication |
-| 3 | Ride requests | `ride_requests` table, terminal-state trigger, `pg_cron` expiry job, RLS |
-| 4 | Admin panel | `is_admin` / `is_banned` columns, `is_admin()` helper function, admin RLS policies |
-
-Full SQL for all four sections is documented in the [project documentation](docs/project-documentation.md).
-
-To grant admin access to a user after setup:
-```sql
-UPDATE public.users SET is_admin = TRUE WHERE email = 'admin@lus.ac.bd';
-```
+Full database schema and setup instructions are documented in [docs/project-documentation.md](docs/project-documentation.md).
 
 ---
 
@@ -257,30 +243,7 @@ Only one event triggers a notification: a new ride is posted. A PostgreSQL trigg
 
 ### Leaderboard Scoring
 
-Every time a ride's status transitions from `offered` → `booked`, a Postgres trigger increments `total_score` by 10, increments `rides_completed`, and timestamps `score_achieved_at` on the rider's user row. The leaderboard query is a plain indexed `SELECT` with no joins:
-
-```sql
-SELECT id, full_name, total_score, score_achieved_at
-FROM public.users
-WHERE rides_completed >= 1
-ORDER BY total_score DESC, score_achieved_at ASC
-LIMIT 50;
-```
-
----
-
-## Navigation
-
-Four persistent bottom-nav tabs:
-
-| Tab | Screen | Key Content |
-|---|---|---|
-| Home | Dashboard | Active rides, active requests, route demand summary, latest 10 completed rides, offer/request buttons |
-| Rides | Ride History | All rides the current user offered that reached Booked or Cancelled state |
-| Leaderboard | Rankings | Top 50 contributors by score; current user always visible |
-| Profile | Profile | Edit name/phone; admin panel entry (admins only); logout |
-
-The notification inbox, chat, ride detail, offer/request flows, and admin panel all push on top of the current tab and return on back navigation.
+Every time a ride's status transitions from `offered` → `booked`, a Postgres trigger increments `total_score` by 10, increments `rides_completed`, and timestamps `score_achieved_at` on the rider's user row. The leaderboard is ranked by score (descending) with tie-breaking by earliest achievement timestamp.
 
 ---
 
@@ -318,8 +281,8 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 
 <div align="center">
 
-Developed as a Third Year Defense Project
-Department of Computer Science & Engineering
+Developed as a Third Year Defense Project  
+Department of Computer Science & Engineering  
 Leading University, Sylhet
 
 </div>
